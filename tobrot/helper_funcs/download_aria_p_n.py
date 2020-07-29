@@ -301,9 +301,9 @@ async def check_progress_for_dl(aria2, gid, event, previous_message):
                     pass
                 #
                 msg = f"\nDownloading File: <code>{downloading_dir_name}</code>"
-                msg += f"\nSpeed: {file.download_speed_string()} 🔽 / {file.upload_speed_string()} 🔼"
-                msg += f"\nProgress: {file.progress_string()}"
-                msg += f"\nTotal Size: {file.total_length_string()}"
+                msg += f"\n \nSpeed: {file.download_speed_string()} 🔽  \n{file.upload_speed_string()} 🔼"
+                msg += f"\n\nProgress: {file.progress_string()}"
+                msg += f"\n\nTotal Size: {file.total_length_string()}"
 
                 if file.seeder is None :
                    msg += f"\n<b>Connections:</b> {file.connections}"
@@ -324,12 +324,12 @@ async def check_progress_for_dl(aria2, gid, event, previous_message):
             await asyncio.sleep(EDIT_SLEEP_TIME_OUT)
             await check_progress_for_dl(aria2, gid, event, previous_message)
         else:
-            await event.edit(f"File Downloaded Successfully: <code>{file.name}</code>")
+            await event.edit(f"Success: <code>{file.name}</code>")
             return True
     except Exception as e:
         LOGGER.info(str(e))
         if " not found" in str(e) or "'file'" in str(e):
-            await event.edit("Download Canceled :\n<code>{}</code>".format(file.name))
+            await event.edit("Canceled :\n<code>{}</code>".format(file.name))
             return False
         elif " depth exceeded" in str(e):
             file.remove(force=True)
